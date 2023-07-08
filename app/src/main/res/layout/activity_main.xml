@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:padding="@dimen/main_screen_main_layout_padding"
+    android:background="@color/black"
     >
     
     <ImageView

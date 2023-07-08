@@ -3,6 +3,7 @@ package com.example.a7minworkout
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import android.widget.Toast
 import androidx.viewbinding.ViewBinding
 import com.example.a7minworkout.databinding.ActivityExcerciseBinding
@@ -12,6 +13,8 @@ class ExcerciseActivity : AppCompatActivity() {
     private var binding : ActivityExcerciseBinding? = null
     private var restTimer : CountDownTimer? = null
     private var restProgress = 0
+    private var exerciseTimer : CountDownTimer? = null
+    private var exerciseProgress = 0
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -26,6 +29,8 @@ class ExcerciseActivity : AppCompatActivity() {
         binding?.toolbarExcercise?.setNavigationOnClickListener{
            onBackPressedDispatcher.onBackPressed()
         }
+        // binding?.flTimer?.visibility = View.GONE will make the fl gone from the ui.
+        //.INVISIBLE will make it invisible but thr fl would still have the space in ui.
 
         setUpRestView()
 
@@ -33,13 +38,22 @@ class ExcerciseActivity : AppCompatActivity() {
     }
 
     private fun setUpRestView(){// done so that if we go back to home then come gain timer will be reset.
-
         if(restTimer != null){
             restTimer?.cancel()
             restProgress = 0
         }
-
         setRestProgressBar()
+    }
+    private fun setUpExerciseView(){
+
+        binding?.flTimer?.visibility = View.INVISIBLE
+        binding?.tvTitle?.text = "PushUps"
+        binding?.flTimerExcrcise?.visibility = View.VISIBLE
+        if(exerciseTimer != null){
+            exerciseTimer?.cancel()
+            exerciseProgress = 0
+        }
+        setExerciseProgressBar()
     }
 
     private fun setRestProgressBar(){
@@ -52,9 +66,27 @@ class ExcerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                setUpExerciseView()
                 Toast.makeText(this@ExcerciseActivity ,
                 "Let's start our workout"
                 ,Toast.LENGTH_SHORT).show()
+            }
+        }.start()
+    }
+
+    private fun setExerciseProgressBar(){
+        binding?.progressBarExercise?.progress = exerciseProgress
+        exerciseTimer = object : CountDownTimer(30000 , 1000){
+            override fun onTick(p0 : Long) {
+                exerciseProgress++
+                binding?.progressBarExercise?.progress = 30 - exerciseProgress
+                binding?.tvTimerExercise?.text = (30 - exerciseProgress).toString()
+            }
+
+            override fun onFinish() {
+                Toast.makeText(this@ExcerciseActivity ,
+                    "take some rest now"
+                    ,Toast.LENGTH_SHORT).show()
             }
         }.start()
     }
@@ -64,6 +96,11 @@ class ExcerciseActivity : AppCompatActivity() {
         if(restTimer != null){
             restTimer?.cancel()
             restProgress = 0
+        }
+
+        if(exerciseTimer != null){
+            exerciseTimer?.cancel()
+            exerciseProgress = 0
         }
         binding = null
     }

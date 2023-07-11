@@ -5,7 +5,7 @@ object Constants {
         val excerciseList = ArrayList<ExerciseModel>()
         val stretching = ExerciseModel(
             1 , "Stretching" ,
-            R.drawable.streaching ,
+            R.drawable.stretchingg ,
             false , false
         )
         excerciseList.add(stretching)
@@ -17,7 +17,7 @@ object Constants {
         excerciseList.add(pushups)
         val hnumnpushups = ExerciseModel(
             3 , "Hanuman PushUps" ,
-            R.drawable.hanuman_pushups ,
+            R.drawable.hanuman_pushup ,
             false , false
         )
         excerciseList.add(hnumnpushups)

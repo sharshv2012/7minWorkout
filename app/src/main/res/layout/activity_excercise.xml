@@ -77,6 +77,30 @@
         </LinearLayout>
 
     </FrameLayout>
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/gifExercise"
+        android:scaleType="fitXY"
+        android:src="@drawable/pushups"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/tvExercise"
+        app:layout_constraintTop_toBottomOf="@id/toolbarExcercise"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvExercise"
+        android:text="Exercise name"
+        android:textColor="@color/teal_200"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textSize="22sp"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/gifExercise"/>
+
 
     <FrameLayout
         android:id="@+id/flTimerExcrcise"
@@ -86,7 +110,7 @@
         android:visibility="gone"
         android:layout_marginTop="10dp"
         android:background="@drawable/item_circular_color_accent_border"
-        app:layout_constraintTop_toBottomOf="@id/toolbarExcercise"
+        app:layout_constraintTop_toBottomOf="@id/tvExercise"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

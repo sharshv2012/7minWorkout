@@ -1,5 +1,7 @@
 package com.example.a7minworkout
 
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -23,6 +25,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var exerciseList : ArrayList<ExerciseModel>? = null
     private var currentExercise : Int = -1
     private var tts : TextToSpeech? = null
+    private var player : MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -49,6 +52,14 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun setUpRestView(){// done so that if we go back to home then come gain timer will be reset.
+        try {
+            val soundURI = Uri.parse("android.resource://com.example.a7minworkout/" + R.raw.kshmr)
+            player = MediaPlayer.create(applicationContext , soundURI)
+            player?.isLooping = false
+            player?.start()
+        }catch (e : Exception){
+            e.printStackTrace()
+        }
         binding?.flTimer?.visibility = View.VISIBLE
         binding?.tvTitle?.visibility = View.VISIBLE
         binding?.tvExercise?.visibility = View.INVISIBLE
@@ -56,11 +67,12 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding?.gifExercise?.visibility = View.INVISIBLE
         binding?.upcomingLable?.visibility = View.VISIBLE
         binding?.tvUpcomingExercise?.visibility  = View.VISIBLE
+        speakout("Please Get Some Rest. ")
         if(restTimer != null){
             restTimer?.cancel()
             restProgress = 0
         }
-        speakout("Please Get Some Rest. ")
+
         binding?.tvUpcomingExercise?.text = exerciseList!![currentExercise + 1].getName()
         setRestProgressBar()
     }
@@ -92,11 +104,12 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 restProgress++
                 binding?.progressBar?.progress = 10 - restProgress
                 binding?.tvTimer?.text = (10 - restProgress).toString()
+
             }
 
             override fun onFinish() {
 
-
+                player?.stop()
                 currentExercise++
                 setUpExerciseView()
             }
@@ -143,6 +156,9 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if(tts != null){
             tts?.stop()
             tts?.shutdown()
+        }
+        if(player!=null){
+            player?.stop()
         }
         binding = null
     }

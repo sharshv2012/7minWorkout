@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.example.a7minworkout.databinding.ActivityExcerciseBinding
 import com.example.a7minworkout.databinding.ActivityMainBinding
@@ -26,6 +27,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var currentExercise : Int = -1
     private var tts : TextToSpeech? = null
     private var player : MediaPlayer? = null
+    private var exerciseAdapter : ExerciseStatusAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -47,8 +49,14 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         //.INVISIBLE will make it invisible but thr fl would still have the space in ui.
 
         setUpRestView()
+        setUpExerciseRcyclrView()
 
+    }
 
+    private fun setUpExerciseRcyclrView(){
+        binding?.rvExerciseStatus?.layoutManager = LinearLayoutManager(this , LinearLayoutManager.HORIZONTAL ,false)
+        exerciseAdapter =ExerciseStatusAdapter(exerciseList!!)
+        binding?.rvExerciseStatus?.adapter = exerciseAdapter
     }
 
     private fun setUpRestView(){// done so that if we go back to home then come gain timer will be reset.

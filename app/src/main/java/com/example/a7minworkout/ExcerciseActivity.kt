@@ -1,5 +1,6 @@
 package com.example.a7minworkout
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -148,9 +149,10 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     exerciseAdapter!!.notifyDataSetChanged()
                     setUpRestView()
                 }else{
-                    Toast.makeText(this@ExcerciseActivity ,
-                        "u r done"
-                        ,Toast.LENGTH_SHORT).show()
+
+                   finish()
+                    val intent = Intent(this@ExcerciseActivity , FinalACtivity::class.java)
+                    startActivity(intent)
                 }
 
             }

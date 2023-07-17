@@ -55,7 +55,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun setUpExerciseRcyclrView(){
         binding?.rvExerciseStatus?.layoutManager = LinearLayoutManager(this , LinearLayoutManager.HORIZONTAL ,false)
-        exerciseAdapter =ExerciseStatusAdapter(exerciseList!!)
+        exerciseAdapter = ExerciseStatusAdapter(exerciseList!!)
         binding?.rvExerciseStatus?.adapter = exerciseAdapter
     }
 
@@ -119,6 +119,8 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
                 player?.stop()
                 currentExercise++
+                exerciseList!![currentExercise].setIsSelected(true)
+                exerciseAdapter!!.notifyDataSetChanged()
                 setUpExerciseView()
             }
         }.start()
@@ -139,6 +141,11 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     "take some rest now"
                     ,Toast.LENGTH_SHORT).show()
                 if(currentExercise < exerciseList?.size!! -1){
+
+                    exerciseList!![currentExercise].setIsSelected(false)
+                    exerciseList!![currentExercise].setIsCompleted(true)
+
+                    exerciseAdapter!!.notifyDataSetChanged()
                     setUpRestView()
                 }else{
                     Toast.makeText(this@ExcerciseActivity ,

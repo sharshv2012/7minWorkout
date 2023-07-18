@@ -1,5 +1,6 @@
 package com.example.a7minworkout
 
+import android.app.Dialog
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.example.a7minworkout.databinding.ActivityExcerciseBinding
 import com.example.a7minworkout.databinding.ActivityMainBinding
+import com.example.a7minworkout.databinding.DialogCustomBackConfirmationBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,7 +47,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         tts = TextToSpeech(this , this)
         binding?.toolbarExcercise?.setNavigationOnClickListener{
-           onBackPressedDispatcher.onBackPressed()
+            customDialogForBackButton()
         }
         // binding?.flTimer?.visibility = View.GONE will make the fl gone from the ui.
         //.INVISIBLE will make it invisible but thr fl would still have the space in ui.
@@ -157,6 +160,27 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             }
         }.start()
+    }
+
+    override fun onBackPressed() {
+        customDialogForBackButton()
+
+    }//overriding the onBackPressed functionality to modify it .
+    private fun customDialogForBackButton(){
+        val customDialog = Dialog(this@ExcerciseActivity)
+        val dialogBinding = DialogCustomBackConfirmationBinding.inflate(layoutInflater)
+        // inflating binding for custom xml resource file.
+        customDialog.setContentView(dialogBinding.root)
+        customDialog.setCanceledOnTouchOutside(false)
+        dialogBinding.btnYes.setOnClickListener{
+            this@ExcerciseActivity.finish()
+            customDialog.dismiss()
+        }
+        dialogBinding.btnNahh.setOnClickListener{
+            customDialog.dismiss()
+        }
+        customDialog.show()
+
     }
 
     override fun onDestroy() {

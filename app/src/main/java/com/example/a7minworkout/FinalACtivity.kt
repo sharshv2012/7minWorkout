@@ -14,7 +14,7 @@ class FinalACtivity : AppCompatActivity() {
         gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
                 // Handle double tap event here
-                finish()
+                   finish()
                 return true
             }
         })

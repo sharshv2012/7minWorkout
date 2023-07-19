@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/light_grey" />
+        app:titleTextColor="@color/white" />
 
     <TextView
         android:id="@+id/tvTitle"

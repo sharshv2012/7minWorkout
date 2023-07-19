@@ -1,5 +1,6 @@
 package com.example.a7minworkout
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,8 @@ import android.os.CountDownTimer
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.a7minworkout.databinding.ActivityMainBinding
+import com.example.a7minworkout.databinding.DialogCustomBackConfirmationBinding
+import com.example.a7minworkout.databinding.DialogCustomBackConfirmationForMainActivityBinding
 
 class MainActivity : AppCompatActivity() {
     private var binding:ActivityMainBinding? = null
@@ -28,6 +31,26 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this , BMIActivity::class.java)
             startActivity(intent)
         }
+    }
+    override fun onBackPressed() {
+        customDialogForBackButton()
+
+    }//overriding the onBackPressed functionality to modify it .
+    private fun customDialogForBackButton(){
+        val customDialog = Dialog(this@MainActivity)
+        val dialogBinding = DialogCustomBackConfirmationForMainActivityBinding.inflate(layoutInflater)
+        // inflating binding for custom xml resource file.
+        customDialog.setContentView(dialogBinding.root)
+        customDialog.setCanceledOnTouchOutside(false)
+        dialogBinding.btnYes.setOnClickListener{
+            this@MainActivity.finish()
+            customDialog.dismiss()
+        }
+        dialogBinding.btnNahh.setOnClickListener{
+            customDialog.dismiss()
+        }
+        customDialog.show()
+
     }
 
     override fun onDestroy() {//used to unassign viewbinding

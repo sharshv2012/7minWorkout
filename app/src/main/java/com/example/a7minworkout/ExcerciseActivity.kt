@@ -13,11 +13,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.example.a7minworkout.databinding.ActivityExcerciseBinding
 import com.example.a7minworkout.databinding.ActivityMainBinding
 import com.example.a7minworkout.databinding.DialogCustomBackConfirmationBinding
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -112,7 +115,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun setRestProgressBar(){
         binding?.progressBar?.progress = restProgress
-        restTimer = object : CountDownTimer(3000 , 1000){
+        restTimer = object : CountDownTimer(1000 , 1000){
             override fun onTick(p0 : Long) {
                 restProgress++
                 binding?.progressBar?.progress = 10 - restProgress
@@ -133,7 +136,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun setExerciseProgressBar(){
         binding?.progressBarExercise?.progress = exerciseProgress
-        exerciseTimer = object : CountDownTimer(3000 , 1000){
+        exerciseTimer = object : CountDownTimer(1000 , 1000){
             override fun onTick(p0 : Long) {
                 exerciseProgress++
                 binding?.progressBarExercise?.progress = 30 - exerciseProgress
@@ -154,7 +157,7 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     setUpRestView()
                 }else{
 
-                   finish()
+                    finish()
                     val intent = Intent(this@ExcerciseActivity , FinalACtivity::class.java)
                     startActivity(intent)
                 }
@@ -221,5 +224,6 @@ class ExcerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun speakout(text : String){
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH , null , "")
     }
+
 
 }

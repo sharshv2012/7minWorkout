@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class HistoryEntity(
     @PrimaryKey
     val date:String
+
 )
 
